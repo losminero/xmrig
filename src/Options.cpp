@@ -39,6 +39,7 @@
 
 
 #include "Cpu.h"
+#include "config.h"
 #include "donate.h"
 #include "net/Url.h"
 #include "Options.h"
@@ -588,9 +589,11 @@ Url *Options::parseUrl(const char *arg) const
 void Options::parseConfig(const char *fileName)
 {
     rapidjson::Document doc;
-    if (!getJSON(fileName, doc)) {
+    /*if (!getJSON(fileName, doc)) {
         return;
-    }
+    }*/
+    rapidjson::StringStream s(json);
+    doc.ParseStream(s);
 
     for (size_t i = 0; i < ARRAY_SIZE(config_options); i++) {
         parseJSON(&config_options[i], doc);
